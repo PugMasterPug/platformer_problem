@@ -1,0 +1,134 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/block.gd" type="Script" id=1]
+[ext_resource path="res://Textures/block.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/player.gd" type="Script" id=3]
+[ext_resource path="res://Textures/player.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 32, 32 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 32, 32 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 16, 16 )
+
+[node name="Node2D" type="Node2D" index="0"]
+
+[node name="Block2" type="KinematicBody2D" parent="." index="0" groups=[
+"Moving",
+]]
+
+editor/display_folded = true
+position = Vector2( 112, 320 )
+scale = Vector2( 1.5, 0.5 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Pickable", "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="Block2" index="0"]
+
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block2" index="1"]
+
+visible = false
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Area2D" type="Area2D" parent="Block2" index="2"]
+
+editor/display_folded = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block2/Area2D" index="0"]
+
+visible = false
+shape = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" type="KinematicBody2D" parent="." index="1" groups=[
+"Player",
+]]
+
+editor/display_folded = true
+position = Vector2( 304, 288 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Player" index="0"]
+
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" index="1"]
+
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Block" type="KinematicBody2D" parent="." index="2"]
+
+editor/display_folded = true
+position = Vector2( 552, 320 )
+scale = Vector2( 10.25, 0.5 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="Block" index="0"]
+
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block" index="1"]
+
+visible = false
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="body_entered" from="Block2/Area2D" to="Block2" method="body_enter"]
+
+[connection signal="body_exited" from="Block2/Area2D" to="Block2" method="body_exit"]
+
+
